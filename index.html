@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeekStore</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="imagenes/geek2.png" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="imagenes/geek.png" alt="Logotipo de AluraGeek">
+            <h1>GeekStore</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="productos">
+            <h2>MIS PRODUCTOS:</h2>
+            <div class="productos-grid">
+                <script>
+                    // Function to fetch products
+                    async function getProducts() {
+                        try {
+                            const response = await fetch('http://localhost:3000/products');
+                            if (!response.ok) {
+                                throw new Error(`Error fetching products: ${response.statusText}`);
+                            }
+                            const products = await response.json();
+                            return products;
+                        } catch (error) {
+                            console.error('Error fetching products:', error);
+                        }
+                    }
+
+                    // Function to display products
+                    function displayProducts(products) {
+                        const productContainer = document.querySelector('.productos-grid');
+                        productContainer.innerHTML = '';
+
+                        products.forEach(product => {
+                            const productElement = document.createElement('div');
+                            productElement.classList.add('producto');
+
+                            productElement.innerHTML = `
+                                <img src="${product.image}" alt="${product.name}">
+                                <p>${product.name}</p>
+                                <p>$ ${product.price}</p>
+                                <button class="eliminar" data-id="${product.id}">
+                                    <img src="imagenes/basura.png" alt="Eliminar">
+                                </button>
+                            `;
+
+                            productContainer.appendChild(productElement);
+                        });
+
+                        // Add event listeners to delete buttons
+                        const deleteButtons = document.querySelectorAll('.eliminar');
+                        deleteButtons.forEach(button => {
+                            button.addEventListener('click', async function() {
+                                const productId = this.getAttribute('data-id');
+                                await deleteProduct(productId);
+                                const products = await getProducts();
+                                displayProducts(products);
+                            });
+                        });
+                    }
+
+                    // Function to delete a product
+                    async function deleteProduct(id) {
+                        try {
+                            const response = await fetch(`http://localhost:3000/products/${id}`, {
+                                method: 'DELETE'
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Error deleting product: ${response.statusText}`);
+                            }
+                        } catch (error) {
+                            console.error('Error deleting product:', error);
+                        }
+                    }
+
+                    // Call functions to fetch and display products on page load
+                    window.onload = async () => {
+                        const products = await getProducts();
+                        displayProducts(products);
+                    };
+                </script>
+            </div>
+        </section>
+        <section class="formulario">
+            <h2>AGREGAR PRODUCTO:</h2>
+            <form id="product-form">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="nombre..." required>
+                
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" placeholder="precio..." required>
+                
+                <label for="imagen">Imagen:</label>
+                <input type="text" id="imagen" name="imagen" placeholder="imagen..." required>
+                
+                <button type="submit">Crear</button>
+                <button type="reset">Limpiar</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <div class="logo">
+            <img src="imagenes/geek3.png" alt="Logotipo de AluraGeek">
+            <h1>Geekstore</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script>
+        // Function to handle form submission
+        document.getElementById('product-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const imagen = document.getElementById('imagen').value;
+
+            // Create a new product object
+            const newProduct = {
+                name: nombre,
+                price: parseFloat(precio),
+                image: imagen
+            };
+
+            try {
+                // Send a POST request to add the new product
+                const response = await fetch('http://localhost:3000/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newProduct)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error adding product: ${response.statusText}`);
+                }
+
+                // Clear the form
+                document.getElementById('product-form').reset();
+
+                // Refresh the product list
+                const products = await getProducts();
+                displayProducts(products);
+            } catch (error) {
+                console.error('Error adding product:', error);
+            }
+        });
+    </script>
+</body>
+</html>

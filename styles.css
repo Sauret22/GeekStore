@@ -1,0 +1,205 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1E1E1E;
+    padding: 10px 20px;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.productos {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.productos h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.productos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.producto {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: calc(33% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+}
+
+.producto img {
+    max-width: 90%;
+    height: auto;
+}
+
+.producto p {
+    margin: 10px 0;
+    text-align: left;
+    
+}
+
+.producto .eliminar {
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    padding: 0px 10px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.formulario {
+    width: 35%;
+}
+
+.formulario h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+}
+
+.formulario label {
+    margin-bottom: 5px;
+}
+
+.formulario input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formulario button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formulario button[type="submit"] {
+    background-color: #0000FF;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.formulario button[type="reset"] {
+    background-color: #ccc;
+    color: black;
+}
+footer {
+    background-color: #1E1E1E;
+    padding: 20px 0;
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Distribute space evenly */
+    align-items: center; /* Align items vertically */
+    width: 100%; /* Span the full width */
+  }
+  
+  .logo {
+    display: flex; /* Use flexbox for logo and heading */
+    align-items: center; /* Align vertically */
+  }
+  
+  .logo img {
+    width: 50px; /* Adjust logo size */
+    margin-right: 10px; /* Space between logo and heading */
+  }
+  
+  .logo h1 {
+    font-size: 20px; /* Adjust heading size */
+    margin: 0; /* Remove default margins */
+    color: white;
+  }
+  
+  nav ul {
+    list-style: none; /* Remove default bullet points */
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
+    color: white;
+  }
+  
+  nav li {
+    display: inline-block; /* Display list items inline */
+    margin-right: 20px; /* Space between list items */
+  }
+  
+  nav a {
+    color: #333; /* Link color */
+    text-decoration: none; /* Remove default underline */
+    font-size: 16px; /* Adjust link font size */
+    transition: color 0.3s ease; /* Add hover transition */
+  }
+  
+  nav a:hover {
+    color: #007bff; /* Link color on hover */
+  }
+  
+  @media screen and (max-width: 768px) {
+    /* Styles for screens less than 768px wide */
+    main {
+        flex-direction: column-reverse; /* Stack elements vertically */
+      }
+    .formulario {
+        width: auto; /* Allow form to adjust its width */
+        margin-bottom: 20px; /* Add spacing between form and products */
+      }
+      .productos {
+        width: 100%; /* Form takes full width on small screens */
+      }
+    
+      
+    }
